@@ -1,4 +1,4 @@
-local object            = require("miss-core.src.object")
+local Object            = require("miss-core.src.object")
 local http              = require("miss-core.src.http")
 local log               = require("miss-core.src.log")
 local utils             = require("miss-core.src.utils")
@@ -8,7 +8,7 @@ local uri               = require("miss-core.src.uri")
 local xml               = require("miss-core.src.xml")
 
 return {
-        object          = object,
+        Object          = Object,
         http            = http,
         log             = log,
         utils           = utils,
