@@ -9,7 +9,7 @@ local _M = {}
 
 -- @breif       query string to lua table
 -- @param       query   {string}
--- @return      tab     {table[object]}
+-- @return      tab     {object}
 function _M.decode(str, limit)
         local fields = utils.split(str, "&")
         local tab = {}
@@ -53,8 +53,8 @@ local function insertField(fields, key, val)
 end
 
 -- @brief       build query string
--- @param       tab     {table[object]}
--- @param       keys    {table[array]}
+-- @param       tab     {object}
+-- @param       keys    {array[string]}
 -- @return      query   {string}
 function _M.build(tab, keys)
         local fields = {}
@@ -90,8 +90,8 @@ local function insertEncodedField(fields, key, val)
 end
 
 -- @brief       build query string, key and value encoded
--- @param       tab     {table[object]}
--- @param       keys    {table[array]}
+-- @param       tab     {object}
+-- @param       keys    {array[string]}
 -- @return      query   {string}
 function _M.encode(tab, keys)
         local fields = {}

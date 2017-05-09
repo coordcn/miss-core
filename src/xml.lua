@@ -12,7 +12,7 @@ local _M = {}
 --                      <appid>123456</appid>
 --                      <test>test</test>
 --              </xml>
--- @return      tab {table[object]}
+-- @return      tab {object}
 --              {
 --                      appid = 123456,
 --                      test = test
@@ -40,7 +40,7 @@ function _M.decode(xml)
 end
 
 -- @brief       lua table to xml
--- @param       tab     {table[object]}
+-- @param       tab     {object}
 -- @return      xml     {string}
 function _M.encode(tab)
         local xml = "<xml>"

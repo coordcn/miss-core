@@ -5,7 +5,7 @@
 local _M = {}
 
 -- @brief       wrap string
--- @param       str {string}
+-- @param       str     {string}
 -- @param       wrapper {string}
 -- @return      str     {string}
 function _M.wrap(str, wrapper)
@@ -23,7 +23,7 @@ end
 -- @brief       split string into an array of strings by separator
 -- @param       str     {string}
 -- @param       sep     {string}
--- @param       result  {table[array(string)]}
+-- @param       result  {array[string]}
 function _M.split(str, sep)
         if type(sep) ~= "string" or sep == "" then
                 sep = "%s+"
@@ -75,9 +75,9 @@ function _M.encodeLuaMagic(str)
 end
 
 -- @brief       return keys of the table
--- @param       tab     {table[object]}
--- @param       except  {table[object(boolean)]}
--- @return      keys    {table[array(string)]}
+-- @param       tab     {object}
+-- @param       except  {object[boolean]}
+-- @return      keys    {array[string]}
 function _M.keys(tab, except)
         local keys = {}
         if except then
@@ -96,9 +96,9 @@ function _M.keys(tab, except)
 end
 
 -- @brief       merge src table to dest table
--- @param       dest    {table[object]}
--- @param       src     {table[object]}
--- @param       except  {table[object(boolean)]}
+-- @param       dest    {object}
+-- @param       src     {object}
+-- @param       except  {object[boolean]}
 function _M.merge(dest, src, except)
         if except then
                 for key, val in pairs(src) do
