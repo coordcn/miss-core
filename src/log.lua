@@ -1,4 +1,6 @@
--- @author: qianye@droi.com
+-- Copyright © 2017 coord.cn. All rights reserved.
+-- @author      QianYe(coordcn@163.com)
+-- @license     MIT license
 
 local cjson     = require("cjson.safe")
 
