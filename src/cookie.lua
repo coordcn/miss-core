@@ -17,11 +17,9 @@ function _M.decode(str)
                 local value = tmp[2]
                 if key then
                         key = utils.trim(key)
-                        if #key > 0 and value then
+                        if #key > 0 then
                                 value = utils.trim(value)
-                                if #value > 0 then
-                                        result[key] = value
-                                end
+                                result[key] = value or ""
                         end
                 end
         end
