@@ -12,12 +12,16 @@ function _M.wrap(str, wrapper)
         return wrapper .. str .. wrapper
 end
 
--- @brief       remove whitespace from both ends of a string
+-- @brief       remove regexp from both ends of a string
 -- @param       str     {string}
+-- @param       regexp  {string}
 -- @return      str     {string}
-function _M.trim(str)
-        local from = str:match"^%s*()"
-        return from > #str and "" or str:match(".*%S", from)
+function _M.trim(str, regexp)
+        if type(str) == "string" then
+                regexp = regexp or "%s"
+                local from = str:match("^" .. regexp .. "*()")
+                return from > #str and "" or str:match(".*[^" .. regexp .. "]", from)
+        end
 end
 
 -- @brief       split string into an array of strings by separator
