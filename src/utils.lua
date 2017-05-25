@@ -29,7 +29,7 @@ end
 -- @brief       split string into an array of strings by separator
 -- @param       str     {string}
 -- @param       sep     {string}
--- @param       result  {array[string]}
+-- @return      result  {array[string]}
 function _M.split(str, sep)
         if type(sep) ~= "string" or sep == "" then
                 sep = "%s+"
