@@ -117,4 +117,24 @@ function _M.merge(dest, src, except)
         end
 end
 
+-- @brief       parser Content-Type
+-- @param       str     {string}
+-- @return      ctype   {string}
+-- @return      charset {string} 
+function _M.parseContentType(str)
+        if not str then return end
+        local ret = _M.split(str, ";")
+       
+        local ctype = ret[1]
+        if not ctype then return end
+
+        ctype = string.lower(_M.trim(ctype))
+
+        local charset = ret[2]
+        if not charset then return ctype end 
+
+        charset = string.lower(_M.trim(charset))
+        return ctype, charset
+end
+
 return _M
