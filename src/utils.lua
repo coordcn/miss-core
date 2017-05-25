@@ -2,6 +2,8 @@
 -- @author      QianYe(coordcn@163.com)
 -- @license     MIT license
 
+local MIME = require("miss-core.src.mime")
+
 local _M = {}
 
 -- @brief       wrap string
@@ -133,7 +135,12 @@ function _M.parseContentType(str)
         local charset = ret[2]
         if not charset then return ctype end 
 
-        charset = string.lower(_M.trim(charset))
+        if ctype == MIME.MULTIPART then
+                charset = _M.trim(charset)
+        else
+                charset = string.lower(_M.trim(charset))
+        end
+
         return ctype, charset
 end
 
