@@ -30,7 +30,7 @@ local DEFAULT_OPTIONS_META = {
 --              maxLineSize     = {number}
 --              maxFileSize     = {number}
 --              maxFileCount    = {number}
---              maxPostArgs     = {number}
+--              maxArgCount     = {number}
 --              maxArgSize      = {number}
 --      }
 function _M.handle(options)
@@ -45,7 +45,7 @@ function _M.handle(options)
         local maxLineSize       = options.maxLineSize
         local maxFileSize       = options.maxFileSize
         local maxFileCount      = options.maxFileCount
-        local maxPostArgs       = options.maxPostArgs
+        local maxArgCount       = options.maxArgCount
         local maxArgSize        = options.maxArgSize
 
         local form, err = upload:new(chunkSize, maxLineSize)
@@ -93,7 +93,7 @@ function _M.handle(options)
                                                         if not file then return err end
                                                         file:setvbuf("full", chunkSize)
                                                 else
-                                                        if maxPostArgs < count + 1 then
+                                                        if maxArgCount < count + 1 then
                                                                 return "the maximum count of post args exceeded"
                                                         end
 
