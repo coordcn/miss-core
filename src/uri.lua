@@ -14,7 +14,7 @@ local URI_MARK          = "-_.!~*'()"
 --              Reserved characters 	        ; , / ? : @ & = + $
 --              Unescaped characters            alphabetic, decimal digits, - _ . ! ~ * ' ( )
 --              Number sign 	                #
-local ENCODE_URI_EXCEPT_REGEXP  = "([^w" .. 
+local ENCODE_URI_EXCEPT_REGEXP  = "([^%w" .. 
                                   utils.encodeLuaMagic(URI_RESERVED) .. 
                                   utils.encodeLuaMagic(URI_MARK) ..
                                   "#" ..
@@ -63,7 +63,7 @@ end
 --              Reserved characters
 --              Unescaped characters            alphabetic, decimal digits, - _ . ! ~ * ' ( )
 --              Number sign
-local ENCODE_URI_COMPONENT_EXCEPT_REGEXP  = "([^w" .. 
+local ENCODE_URI_COMPONENT_EXCEPT_REGEXP  = "([^%w" .. 
                                             utils.encodeLuaMagic(URI_MARK) .. 
                                             "])"
 
