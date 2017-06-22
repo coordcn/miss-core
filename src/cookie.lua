@@ -91,7 +91,9 @@ function _M.set(cookies)
                 i = i + 1
         end
 
-        ngx.header["Set-Cookie"] = set
+        if i > 1 then
+                ngx.header["Set-Cookie"] = set
+        end
 end
 
 return _M
