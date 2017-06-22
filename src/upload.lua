@@ -143,7 +143,6 @@ function _M.handle(options)
                                 query = query or {}
                                 query[queryInfo.name] = value
                         end
-
                         size = 0
                 elseif resType == "eof" then
                         break
@@ -156,3 +155,5 @@ function _M.handle(options)
 
         return nil, query, files
 end
+
+return _M
