@@ -6,142 +6,147 @@ local MIME = require("miss-core.src.mime")
 
 local _M = {}
 
--- @brief       wrap string
--- @param       str     {string}
--- @param       wrapper {string}
--- @return      str     {string}
+-- @brief   wrap string
+-- @param   str     {string}
+-- @param   wrapper {string}
+-- @return  str     {string}
 function _M.wrap(str, wrapper)
-        return wrapper .. str .. wrapper
+    return wrapper .. str .. wrapper
 end
 
--- @brief       remove regexp from both ends of a string
--- @param       str     {string}
--- @param       regexp  {string}
--- @return      str     {string}
+-- @brief   remove regexp from both ends of a string
+-- @param   str     {string}
+-- @param   regexp  {string}
+-- @return  str     {string}
 function _M.trim(str, regexp)
-        if type(str) == "string" then
-                regexp = regexp or "%s"
-                local from = str:match("^" .. regexp .. "*()")
-                return from > #str and "" or str:match(".*[^" .. regexp .. "]", from)
-        end
+    if type(str) == "string" then
+        regexp = regexp or "%s"
+        local from = str:match("^" .. regexp .. "*()")
+        return from > #str and "" or str:match(".*[^" .. regexp .. "]", from)
+    end
 end
 
--- @brief       split string into an array of strings by separator
--- @param       str     {string}
--- @param       sep     {string}
--- @return      result  {array[string]}
+-- @brief   split string into an array of strings by separator
+-- @param   str     {string}
+-- @param   sep     {string}
+-- @return  result  {array[string]}
 function _M.split(str, sep)
-        if type(sep) ~= "string" or sep == "" then
-                sep = "%s+"
-        end
+    if type(sep) ~= "string" or sep == "" then
+        sep = "%s+"
+    end
 
-        local result = {}
-        local i = 1
-        if type(str) == "string" then
-                for value in string.gmatch(str, '([^' .. sep .. ']+)') do
-                        result[i] = value
-                        i = i + 1
-                end
+    local result = {}
+    local i = 1
+    if type(str) == "string" then
+        for value in string.gmatch(str, '([^' .. sep .. ']+)') do
+            result[i] = value
+            i = i + 1
         end
+    end
 
-        return result
+    return result
 end
 
--- @brief       gen random string
--- @param       hash    {function}
--- @return      str     {string}
+-- @brief   gen random string
+-- @param   hash    {function}
+-- @return  str     {string}
 function _M.randomString(hash)
-        math.randomseed(os.time())
-        return hash(os.time() .. math.random())
+    math.randomseed(os.time())
+    return hash(os.time() .. math.random())
 end
 
 local uuid = require("miss-core.src.uuid")
 
--- @brief       gen uuid
--- @return      str     {string}
+-- @brief   gen uuid
+-- @return  str     {string}
 function _M.uuid()
-        local str = uuid.generate_time_safe()
-        return string.gsub(str, "-", "")
+    local str = uuid.generate_time_safe()
+    return string.gsub(str, "-", "")
 end
 
--- @refer       https://cloudwu.github.io/lua53doc/manual.html#6.4.1
---              magic characters        ^$()%.[]*+-?
+-- @refer   https://cloudwu.github.io/lua53doc/manual.html#6.4.1
+--          magic characters        ^$()%.[]*+-?
 local ENCODE_LUA_MAGIC_REGEXP = "([%^%$%(%)%%%.%[%]%*%+%-%?])"
 
--- @brief       replace lua magic characters to itself in regexp
--- @param       str     {string}        normale string ^$()%.[]*+-? 
--- @return      str     {string}        encoded string %^%$%(%)%%%.%[%]%*%+%-%?
+-- @brief   replace lua magic characters to itself in regexp
+-- @param   str     {string}        normale string ^$()%.[]*+-? 
+-- @return  str     {string}        encoded string %^%$%(%)%%%.%[%]%*%+%-%?
 function _M.encodeLuaMagic(str)
-        if str then
-                str = string.gsub(str, ENCODE_LUA_MAGIC_REGEXP, function(c)
-                        return "%" .. c
-                end)
-        end
-        return str
+    if str then
+        str = string.gsub(str, ENCODE_LUA_MAGIC_REGEXP, function(c)
+            return "%" .. c
+        end)
+    end
+    return str
 end
 
--- @brief       return keys of the table
--- @param       tab     {object}
--- @param       except  {object[boolean]}
--- @return      keys    {array[string]}
+-- @brief   return keys of the table
+-- @param   tab     {object}
+-- @param   except  {object[boolean]}
+-- @return  keys    {array[string]}
 function _M.keys(tab, except)
-        local keys = {}
-        if except then
-                for key, val in pairs(tab) do
-                        if not except[key] then
-                                table.insert(keys, key)
-                        end
-                end
-        else
-                for key, val in pairs(tab) do
-                        table.insert(keys, key)
-                end
+    local keys = {}
+    if except then
+        for key, val in pairs(tab) do
+            if not except[key] then
+                table.insert(keys, key)
+            end
         end
+    else
+        for key, val in pairs(tab) do
+            table.insert(keys, key)
+        end
+    end
 
-        return keys
+    return keys
 end
 
--- @brief       merge src table to dest table
--- @param       dest    {object}
--- @param       src     {object}
--- @param       except  {object[boolean]}
+-- @brief   merge src table to dest table
+-- @param   dest    {object}
+-- @param   src     {object}
+-- @param   except  {object[boolean]}
 function _M.merge(dest, src, except)
-        if except then
-                for key, val in pairs(src) do
-                        if not except[key] then
-                                dest[key] = val
-                        end
-                end
-        else
-                for key, val in pairs(src) do
-                        dest[key] = val
-                end
+    if except then
+        for key, val in pairs(src) do
+            if not except[key] then
+                dest[key] = val
+            end
         end
+    else
+        for key, val in pairs(src) do
+            dest[key] = val
+        end
+    end
 end
 
--- @brief       parser Content-Type
--- @param       str     {string}
--- @return      ctype   {string}
--- @return      charset {string} 
+-- @brief   parser Content-Type
+-- @param   str     {string}
+-- @return  ctype   {string}
+-- @return  charset {string} 
 function _M.parseContentType(str)
-        if not str then return end
-        local ret = _M.split(str, ";")
-       
-        local ctype = ret[1]
-        if not ctype then return end
+    if not str then return end
+    local ret = _M.split(str, ";")
+    
+    local ctype = ret[1]
+    if not ctype then return end
 
-        ctype = string.lower(_M.trim(ctype))
+    ctype = string.lower(_M.trim(ctype))
 
-        local charset = ret[2]
-        if not charset then return ctype end 
+    local charset = ret[2]
+    if not charset then return ctype end 
 
-        if ctype == MIME.MULTIPART then
-                charset = _M.trim(charset)
-        else
-                charset = string.lower(_M.trim(charset))
-        end
+    if ctype == MIME.MULTIPART then
+        charset = _M.trim(charset)
+    else
+        charset = string.lower(_M.trim(charset))
+    end
 
-        return ctype, charset
+    return ctype, charset
+end
+
+-- @brief   dump table
+--
+function _M.dump(tab)
 end
 
 return _M

@@ -6,44 +6,28 @@ local cjson     = require("cjson.safe")
 
 local _M = {}
 
-local function log(level, msg)
-        if msg == nil then
-                msg = "nil"
-        elseif msg == false then
-                msg = "false"
-        elseif msg == true then
-                msg = "true"
-        end
+function _M.log(input)
+    if input == nil then
+        return "nil"
+    elseif input == false then
+        return "false"
+    elseif input == true then
+        return "true"
+    end
 
-        local msg_type = type(msg)
-        if msg_type == "string" or msg_type == "number" then
-                ngx.log(level, msg) 
-        elseif msg_type == "table" then
-                local str, err = cjson.encode(msg)
-                if str then
-                        ngx.log(level, str)
-                else
-                        error("json encode error: " .. err)
-                end
+    local input_type = type(input)
+    if input_type == "string" or input_type == "number" then
+        return input
+    elseif input_type == "table" then
+        local output, err = cjson.encode(input)
+        if output then
+            return output
         else
-                error("unsupport msg type")
+            error("json encode error: " .. err)
         end
-end
-
-function _M.ERROR(msg)
-        log(ngx.ERR, msg)
-end
-
-function _M.WARN(msg)
-        log(ngx.WARN, msg)
-end
-
-function _M.INFO(msg)
-        log(ngx.INFO, msg)
-end
-
-function _M.DEBUG(msg)
-        log(ngx.DEBUG, msg)
+    else
+        error("unsupport input type")
+    end
 end
 
 return _M
