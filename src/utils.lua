@@ -82,7 +82,7 @@ function _M.encodeLuaMagic(str)
     return str
 end
 
--- @brief   return keys of the table
+-- @brief   returns keys of the table
 -- @param   tab     {object}
 -- @param   except  {object[boolean]}
 -- @return  keys    {array[string]}
@@ -274,6 +274,24 @@ end
 -- @refer   https://github.com/luvit/luvit/blob/master/tests/libs/deep-equal.lua
 function _M.deepEqual(a, b)
     return deepEqual(a, b)
+end
+
+-- @brief   returns whether table contains value
+-- @param   a   {any|not nil}
+-- @param   t   {object|array}
+-- @return  res {boolean}
+function _M.in(a, t)
+    if type(t) ~= "table" then
+        return false
+    end
+
+    for k, v in pairs(t) do
+        if v == a then
+            return true
+        end
+    end
+
+    return false
 end
 
 return _M
