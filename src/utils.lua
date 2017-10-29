@@ -20,7 +20,7 @@ _M.wrap = wrap
 -- @param   str     {string}
 -- @param   regexp  {string}
 -- @return  str     {string}
-function _M.trim(str, regexp)
+local function trim(str, regexp)
     if type(str) == "string" then
         regexp = regexp or "%s"
         local from = str:match("^" .. regexp .. "*()")
@@ -28,11 +28,13 @@ function _M.trim(str, regexp)
     end
 end
 
+_M.trim = trim
+
 -- @brief   split string into an array of strings by separator
 -- @param   str     {string}
 -- @param   sep     {string}
 -- @return  result  {array[string]}
-function _M.split(str, sep)
+local function split(str, sep)
     if type(sep) ~= "string" or sep == "" then
         sep = "%s+"
     end
@@ -48,6 +50,8 @@ function _M.split(str, sep)
 
     return result
 end
+
+_M.split = split
 
 -- @brief   gen random string
 -- @param   hash    {function}
@@ -129,20 +133,20 @@ end
 -- @return  charset {string} 
 function _M.parseContentType(str)
     if not str then return end
-    local ret = _M.split(str, ";")
+    local ret = split(str, ";")
     
     local ctype = ret[1]
     if not ctype then return end
 
-    ctype = string.lower(_M.trim(ctype))
+    ctype = string.lower(trim(ctype))
 
     local charset = ret[2]
     if not charset then return ctype end 
 
     if ctype == MIME.MULTIPART then
-        charset = _M.trim(charset)
+        charset = trim(charset)
     else
-        charset = string.lower(_M.trim(charset))
+        charset = string.lower(trim(charset))
     end
 
     return ctype, charset
