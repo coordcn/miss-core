@@ -284,7 +284,7 @@ end
 -- @param   a   {any|not nil}
 -- @param   t   {object|array}
 -- @return  res {boolean}
-function _M.in(a, t)
+function _M.has(a, t)
     if type(t) ~= "table" then
         return false
     end
